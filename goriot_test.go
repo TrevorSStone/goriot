@@ -2,11 +2,17 @@ package goriot
 
 import (
 	"testing"
+	"time"
 )
 
 const (
 	personalkey = "your-key-here"
 )
+
+func TestSetup(t *testing.T) {
+	SetSmallRateLimit(10, 10*time.Second)
+	SetLongRateLimit(500, 10*time.Minute)
+}
 
 func TestGetChampionsList(t *testing.T) {
 	SetAPIKey(personalkey)
@@ -94,4 +100,21 @@ func TestGetTeamBySummonerID(t *testing.T) {
 	if err != nil {
 		t.Error(err.Error())
 	}
+}
+
+func TestRateLimits(t *testing.T) {
+	if smallRateChan == nil {
+		SetSmallRateLimit(10, 10*time.Second)
+	}
+	if longRateChan == nil {
+		SetLongRateLimit(500, 10*time.Minute)
+	}
+	SetAPIKey(personalkey)
+	for i := 0; i < 24; i++ {
+		_, err := GetChampionList(NA, false)
+		if err != nil {
+			t.Error(err.Error())
+		}
+	}
+
 }

@@ -9,6 +9,8 @@ import (
 	"fmt"
 	"io/ioutil"
 	"net/http"
+	"runtime"
+	"time"
 )
 
 var (
@@ -20,19 +22,49 @@ var (
 	EUNE            = "eune"
 	SEASON3         = "SEASON3"
 	SEASON4         = "SEASON4"
+	smallRateChan   chan bool
+	longRateChan    chan bool
 )
 
 func SetAPIKey(key string) {
 	apikey = key
+}
 
+func SetSmallRateLimit(numrequests int, pertime time.Duration) {
+	smallRateChan = make(chan bool, numrequests-1)
+	go rateLimitHandler(smallRateChan, pertime+time.Second)
+}
+func SetLongRateLimit(numrequests int, pertime time.Duration) {
+	longRateChan = make(chan bool, numrequests-1)
+	go rateLimitHandler(longRateChan, pertime+time.Second)
+}
+
+func rateLimitHandler(rateChan chan bool, pertime time.Duration) {
+	for {
+		<-rateChan
+		<-time.After(pertime)
+		length := len(rateChan)
+		for i := 0; i < length; i++ {
+			<-rateChan
+		}
+	}
 }
 
 func IsKeySet() bool {
 	return !(apikey == "")
 }
 
-func RequestAndUnmarshal(url string, v interface{}) (err error) {
-	resp, err := http.Get(url)
+func RequestAndUnmarshal(requestURL string, v interface{}) (err error) {
+	if smallRateChan != nil {
+		smallRateChan <- true
+		runtime.Gosched()
+	}
+	if longRateChan != nil {
+		longRateChan <- true
+		runtime.Gosched()
+	}
+
+	resp, err := http.Get(requestURL)
 	if err != nil {
 		return
 	}

@@ -53,7 +53,7 @@ type Summoner struct {
 	RevisionDate  int64
 }
 
-func GetMasteriesBySummoner(region string, summonerID int64) (masteries []MasteryPage, err error) {
+func MasteriesBySummoner(region string, summonerID int64) (masteries []MasteryPage, err error) {
 	if !IsKeySet() {
 		return masteries, ErrAPIKeyNotSet
 	}
@@ -68,7 +68,7 @@ func GetMasteriesBySummoner(region string, summonerID int64) (masteries []Master
 	return pages.Pages, err
 }
 
-func GetRunesBySummoner(region string, summonerID int64) (runes []RunePage, err error) {
+func RunesBySummoner(region string, summonerID int64) (runes []RunePage, err error) {
 	if !IsKeySet() {
 		return runes, ErrAPIKeyNotSet
 	}
@@ -83,7 +83,7 @@ func GetRunesBySummoner(region string, summonerID int64) (runes []RunePage, err 
 	return pages.Pages, err
 }
 
-func GetSummonerByName(region string, name string) (summoner Summoner, err error) {
+func SummonerByName(region string, name string) (summoner Summoner, err error) {
 	if !IsKeySet() {
 		return summoner, ErrAPIKeyNotSet
 	}
@@ -96,7 +96,7 @@ func GetSummonerByName(region string, name string) (summoner Summoner, err error
 	return
 }
 
-func GetSummonerByID(region string, summonerID int64) (summoner Summoner, err error) {
+func SummonerByID(region string, summonerID int64) (summoner Summoner, err error) {
 	if !IsKeySet() {
 		return summoner, ErrAPIKeyNotSet
 	}
@@ -110,7 +110,7 @@ func GetSummonerByID(region string, summonerID int64) (summoner Summoner, err er
 	return
 }
 
-func GetSummonerNamesByID(region string, summonerID ...int64) (summoner []Summoner, err error) {
+func SummonerNamesByID(region string, summonerID ...int64) (summoner []Summoner, err error) {
 	if !IsKeySet() {
 		return summoner, ErrAPIKeyNotSet
 	}

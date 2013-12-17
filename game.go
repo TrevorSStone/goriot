@@ -37,7 +37,7 @@ type GamesList struct {
 	Games []Game
 }
 
-func GetRecentGameBySummoner(region string, summonerID int64) (games []Game, err error) {
+func RecentGameBySummoner(region string, summonerID int64) (games []Game, err error) {
 	var gameslist GamesList
 	if !IsKeySet() {
 		return games, ErrAPIKeyNotSet

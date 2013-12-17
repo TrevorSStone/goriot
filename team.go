@@ -75,7 +75,7 @@ type TeamStatDetail struct {
 	Wins               int
 }
 
-func GetTeamBySummonerID(region string, summonerID int64) (team []Team, err error) {
+func TeamBySummonerID(region string, summonerID int64) (team []Team, err error) {
 	if !IsKeySet() {
 		return team, ErrAPIKeyNotSet
 	}

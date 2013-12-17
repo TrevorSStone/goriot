@@ -43,7 +43,7 @@ type ChampionStat struct {
 	Value int
 }
 
-func GetStatSummariesBySummoner(region string, summonerID int64, season string) (stats []PlayerStatsSummary, err error) {
+func StatSummariesBySummoner(region string, summonerID int64, season string) (stats []PlayerStatsSummary, err error) {
 	var list PlayerStatsSummaryList
 	if !IsKeySet() {
 		return stats, ErrAPIKeyNotSet
@@ -62,7 +62,7 @@ func GetStatSummariesBySummoner(region string, summonerID int64, season string) 
 	return list.PlayerStatSummaries, err
 }
 
-func GetRankedStatsBySummoner(region string, summonerID int64, season string) (stats RankedStats, err error) {
+func RankedStatsBySummoner(region string, summonerID int64, season string) (stats RankedStats, err error) {
 	if !IsKeySet() {
 		return stats, ErrAPIKeyNotSet
 	}

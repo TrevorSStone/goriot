@@ -1,6 +1,8 @@
 package goriot
 
 import (
+	"fmt"
+	"runtime"
 	"testing"
 	"time"
 )
@@ -14,107 +16,128 @@ func TestSetup(t *testing.T) {
 	SetLongRateLimit(500, 10*time.Minute)
 }
 
-func TestGetChampionsList(t *testing.T) {
+func TestChampionsList(t *testing.T) {
 	SetAPIKey(personalkey)
-	_, err := GetChampionList(NA, false)
+	_, err := ChampionList(NA, false)
 	if err != nil {
 		t.Error(err.Error())
 	}
+	fmt.Println("done")
 }
 
-func TestGetRecentGameBySummoner(t *testing.T) {
+func TestRecentGameBySummoner(t *testing.T) {
 	SetAPIKey(personalkey)
-	_, err := GetRecentGameBySummoner(NA, 2112)
+	_, err := RecentGameBySummoner(NA, 2112)
 	if err != nil {
 		t.Error(err.Error())
 	}
+	fmt.Println("done")
 }
 
-func TestGetLeagueBySummoner(t *testing.T) {
+func TestLeagueBySummoner(t *testing.T) {
 	SetAPIKey(personalkey)
-	_, err := GetLeagueBySummoner(NA, 2112)
+	_, err := LeagueBySummoner(NA, 2112)
 	if err != nil {
 		t.Error(err.Error())
 	}
+	fmt.Println("done")
 }
 
-func TestGetStatSummariesBySummoner(t *testing.T) {
+func TestStatSummariesBySummoner(t *testing.T) {
 	SetAPIKey(personalkey)
-	_, err := GetStatSummariesBySummoner(NA, 2112, SEASON3)
+	_, err := StatSummariesBySummoner(NA, 2112, SEASON3)
 	if err != nil {
 		t.Error(err.Error())
 	}
+	fmt.Println("done")
 }
 
 func TestRankedStatsBySummoner(t *testing.T) {
 	SetAPIKey(personalkey)
-	_, err := GetRankedStatsBySummoner(NA, 2112, SEASON3)
+	_, err := RankedStatsBySummoner(NA, 2112, SEASON3)
 	if err != nil {
 		t.Error(err.Error())
 	}
+	fmt.Println("done")
 }
 
-func TestGetMasteriesBySummoner(t *testing.T) {
+func TestMasteriesBySummoner(t *testing.T) {
 	SetAPIKey(personalkey)
-	_, err := GetMasteriesBySummoner(NA, 2112)
+	_, err := MasteriesBySummoner(NA, 2112)
 	if err != nil {
 		t.Error(err.Error())
 	}
+	fmt.Println("done")
 }
 
-func TestGetRunesBySummoner(t *testing.T) {
+func TestRunesBySummoner(t *testing.T) {
 	SetAPIKey(personalkey)
-	_, err := GetRunesBySummoner(NA, 2112)
+	_, err := RunesBySummoner(NA, 2112)
 	if err != nil {
 		t.Error(err.Error())
 	}
+	fmt.Println("done")
 }
 
-func TestGetSummonerByName(t *testing.T) {
+func TestSummonerByName(t *testing.T) {
 	SetAPIKey(personalkey)
-	_, err := GetSummonerByName(NA, "manticorex")
+	_, err := SummonerByName(NA, "manticorex")
 	if err != nil {
 		t.Error(err.Error())
 	}
+	fmt.Println("done")
 }
 
-func TestGetSummonerByID(t *testing.T) {
+func TestSummonerByID(t *testing.T) {
 	SetAPIKey(personalkey)
-	_, err := GetSummonerByID(NA, 2112)
+	_, err := SummonerByID(NA, 2112)
 	if err != nil {
 		t.Error(err.Error())
 	}
+	fmt.Println("done")
 }
 
-func TestGetSummonerNamesByID(t *testing.T) {
+func TestSummonerNamesByID(t *testing.T) {
 	SetAPIKey(personalkey)
-	_, err := GetSummonerNamesByID(NA, 2112, 1111)
+	_, err := SummonerNamesByID(NA, 2112, 1111)
 	if err != nil {
 		t.Error(err.Error())
 	}
+	fmt.Println("done")
 }
 
-func TestGetTeamBySummonerID(t *testing.T) {
+func TestTeamBySummonerID(t *testing.T) {
 	SetAPIKey(personalkey)
-	_, err := GetTeamBySummonerID(NA, 2112)
+	_, err := TeamBySummonerID(NA, 2112)
 	if err != nil {
 		t.Error(err.Error())
 	}
+	fmt.Println("done")
 }
 
 func TestRateLimits(t *testing.T) {
-	if smallRateChan == nil {
+	runtime.GOMAXPROCS(runtime.NumCPU())
+	if smallRateChan.RateQueue == nil {
 		SetSmallRateLimit(10, 10*time.Second)
 	}
-	if longRateChan == nil {
+	if longRateChan.RateQueue == nil {
 		SetLongRateLimit(500, 10*time.Minute)
 	}
 	SetAPIKey(personalkey)
-	for i := 0; i < 24; i++ {
-		_, err := GetChampionList(NA, false)
-		if err != nil {
-			t.Error(err.Error())
-		}
+	returnchan := make(chan bool)
+	for i := 0; i < 123; i++ {
+		go func() {
+			_, err := ChampionList(NA, false)
+			if err != nil {
+				t.Fatal(err.Error())
+			}
+			returnchan <- true
+		}()
+	}
+
+	for i := 0; i < 123; i++ {
+		<-returnchan
+		fmt.Println(i)
 	}
 
 }

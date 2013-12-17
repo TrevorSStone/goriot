@@ -32,7 +32,7 @@ type MiniSeries struct {
 	Wins                 int
 }
 
-func GetLeagueBySummoner(region string, summonerID int64) (league League, err error) {
+func LeagueBySummoner(region string, summonerID int64) (league League, err error) {
 	tempMap := make(map[string]League)
 	if !IsKeySet() {
 		return league, ErrAPIKeyNotSet

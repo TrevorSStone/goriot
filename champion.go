@@ -14,12 +14,12 @@ type Champion struct {
 	RankedPlayEnabled bool
 }
 
-type ChampionList struct {
+type championList struct {
 	Champions []Champion
 }
 
-func GetChampionList(region string, freetoplay bool) (champions []Champion, err error) {
-	var champs ChampionList
+func ChampionList(region string, freetoplay bool) (champions []Champion, err error) {
+	var champs championList
 	if !IsKeySet() {
 		return champions, ErrAPIKeyNotSet
 	}

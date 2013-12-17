@@ -9,7 +9,6 @@ import (
 	"fmt"
 	"io/ioutil"
 	"net/http"
-	"runtime"
 	"time"
 )
 
@@ -22,32 +21,51 @@ var (
 	EUNE            = "eune"
 	SEASON3         = "SEASON3"
 	SEASON4         = "SEASON4"
-	smallRateChan   chan bool
-	longRateChan    chan bool
+	smallRateChan   rateChan
+	longRateChan    rateChan
 )
+
+type rateChan struct {
+	RateQueue   chan bool
+	TriggerChan chan bool
+}
 
 func SetAPIKey(key string) {
 	apikey = key
 }
 
 func SetSmallRateLimit(numrequests int, pertime time.Duration) {
-	smallRateChan = make(chan bool, numrequests-1)
-	go rateLimitHandler(smallRateChan, pertime+time.Second)
+	smallRateChan = rateChan{
+		RateQueue:   make(chan bool, numrequests),
+		TriggerChan: make(chan bool),
+	}
+	go rateLimitHandler(smallRateChan, pertime)
 }
 func SetLongRateLimit(numrequests int, pertime time.Duration) {
-	longRateChan = make(chan bool, numrequests-1)
-	go rateLimitHandler(longRateChan, pertime+time.Second)
+	longRateChan = rateChan{
+		RateQueue:   make(chan bool, numrequests),
+		TriggerChan: make(chan bool),
+	}
+	go rateLimitHandler(longRateChan, pertime)
 }
 
-func rateLimitHandler(rateChan chan bool, pertime time.Duration) {
+func rateLimitHandler(RateChan rateChan, pertime time.Duration) {
+	returnChan := make(chan bool)
+	go timeTriggerWatcher(RateChan.TriggerChan, returnChan)
 	for {
-		<-rateChan
+		<-returnChan
 		<-time.After(pertime)
-		length := len(rateChan)
+		go timeTriggerWatcher(RateChan.TriggerChan, returnChan)
+		length := len(RateChan.RateQueue)
 		for i := 0; i < length; i++ {
-			<-rateChan
+			<-RateChan.RateQueue
 		}
 	}
+}
+
+func timeTriggerWatcher(timeTrigger chan bool, returnChan chan bool) {
+	timeTrigger <- true
+	returnChan <- true
 }
 
 func IsKeySet() bool {
@@ -55,19 +73,14 @@ func IsKeySet() bool {
 }
 
 func RequestAndUnmarshal(requestURL string, v interface{}) (err error) {
-	if smallRateChan != nil {
-		smallRateChan <- true
-		runtime.Gosched()
-	}
-	if longRateChan != nil {
-		longRateChan <- true
-		runtime.Gosched()
-	}
-
+	checkRateLimiter(smallRateChan)
+	checkRateLimiter(longRateChan)
 	resp, err := http.Get(requestURL)
 	if err != nil {
 		return
 	}
+	checkTimeTrigger(smallRateChan)
+	checkTimeTrigger(longRateChan)
 	if resp.StatusCode != http.StatusOK {
 		return errors.New(fmt.Sprintf("Error: HTTP Status %d", resp.StatusCode))
 	}
@@ -82,4 +95,19 @@ func RequestAndUnmarshal(requestURL string, v interface{}) (err error) {
 		return
 	}
 	return
+}
+
+func checkRateLimiter(RateChan rateChan) {
+	if RateChan.RateQueue != nil && RateChan.TriggerChan != nil {
+		RateChan.RateQueue <- true
+	}
+}
+
+func checkTimeTrigger(RateChan rateChan) {
+	if RateChan.RateQueue != nil && RateChan.TriggerChan != nil {
+		select {
+		case <-RateChan.TriggerChan:
+		default:
+		}
+	}
 }

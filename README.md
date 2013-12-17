@@ -16,7 +16,7 @@ go get github.com/TrevorSStone/goriot
 
 To run tests successfully change the apikey value at the top to your key. Key's can be obtained through https://developer.riotgames.com/
 
-Tests will take upwards of 30s if ran together due to the default rate limiting settings. This is because it has to block for 10s after each 10 requests. If you have different rate limits, change the tests to have them run faster.
+Tests will take upwards of 130s if ran together due to the default rate limiting settings. This is because it has to block for 10s after each 10 requests. If you have different rate limits, change the tests to have them run faster.
 
 The way rate limiting works is semi-experimental. I believe it works under all conditions, but if you get a 429 error please report it.
 

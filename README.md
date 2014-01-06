@@ -20,6 +20,6 @@ Tests will take upwards of 130s if ran together due to the default rate limiting
 
 The way rate limiting works is semi-experimental. I believe it works under all conditions, but if you get a 429 error please report it.
 
-I also have a library I wrote prior that went through the RTMP(s) protocol, but I haven't open sourced it because it is essentially obsolete now. If anyone is interested in that source as well, let me know. If there is enough interest I can put what I currently have up.
+If you are interested in using RTMPS to connect to League of Legends instead of the official API, my other library sets the groundwork for you. https://github.com/TrevorSStone/golol
 
 http://godoc.org/github.com/TrevorSStone/goriot

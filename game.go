@@ -1,50 +1,56 @@
 package goriot
 
 import (
-	"strconv"
+	"fmt"
 )
 
+//Game represents a League of Legends game
 type Game struct {
-	ChampionID    int
-	CreateDate    int64
-	FellowPlayers []Player
-	GameID        int64
-	GameMode      string
-	GameType      string
-	Invalid       bool
-	Level         int
-	MapID         int
-	Spell1        int
-	Spell2        int
-	Statistics    []GameStat
-	SubType       string
-	TeamID        int
+	ChampionID    int        `json:"championId"`
+	CreateDate    int64      `json:"createDate"`
+	FellowPlayers []Player   `json:"fellowPlayers"`
+	GameID        int64      `json:"gameId"`
+	GameMode      string     `json:"gameMode"`
+	GameType      string     `json:"gameType"`
+	Invalid       bool       `json:"invalid"`
+	Level         int        `json:"level"`
+	MapID         int        `json:"mapId"`
+	Spell1        int        `json:"spell1"`
+	Spell2        int        `json:"spell2"`
+	Statistics    []GameStat `json:"statistics"`
+	SubType       string     `json:"subType"`
+	TeamID        int        `json:"teamId"`
 }
 
+//Player represents a League of Legends player that was in the requested game
 type Player struct {
-	ChampionID int
-	SummonerID int64
-	TeamID     int
+	ChampionID int   `json:"championId"`
+	SummonerID int64 `json:"summonerId"`
+	TeamID     int   `json:"teamId"`
 }
 
+//GameStat represents a stat for the assosiated Game
 type GameStat struct {
-	ID    int
-	Name  string
-	Value int
+	ID    int    `json:"id"`
+	Name  string `json:"name"`
+	Value int    `json:"value"`
 }
 
-type GamesList struct {
-	Games []Game
+type gamesList struct {
+	Games []Game `json:"games"`
 }
 
+//RecentGameBySummoner retrieves the current list of recent games from the Riot Games API.
+//It returns an array of Game(s) and any errors that occured from the server
+//The global API key must be set before use
 func RecentGameBySummoner(region string, summonerID int64) (games []Game, err error) {
-	var gameslist GamesList
+	var gameslist gamesList
 	if !IsKeySet() {
 		return games, ErrAPIKeyNotSet
 	}
-	url := BaseURL + "lol/" + region + "/v1.1/game/by-summoner/" + strconv.FormatInt(summonerID, 10) + "/recent"
 	args := "api_key=" + apikey
-	err = RequestAndUnmarshal(url+"?"+args, &gameslist)
+	url := fmt.Sprintf("%v/lol/%v/v1.2/game/by-summoner/%d/recent?%v", BaseURL, region, summonerID, args)
+	err = requestAndUnmarshal(url, &gameslist)
 	if err != nil {
 		return
 	}

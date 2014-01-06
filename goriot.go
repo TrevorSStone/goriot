@@ -13,14 +13,23 @@ import (
 )
 
 var (
+	apikey string
+	//BaseURL is the base of the url used by Riot's API service
+	BaseURL = "https://prod.api.pvp.net/api"
+	//NA represents the string for the North American League of Legends Servers, only used as a helper to prevent typos
+	NA = "na"
+	//EUW represents the string for the West European League of Legends Servers,
+	//only used as a helper to prevent typos
+	EUW = "euw"
+	//EUNE represents the string for the North Eastern European League of Legends Servers,
+	//only used as a helper to prevent typos
+	EUNE = "eune"
+	//SEASON3 is the string of "SEASON3". Used to help prevent typos
+	SEASON3 = "SEASON3"
+	//SEASON4 is the string of "SEASON4". Used to help prevent typos
+	SEASON4 = "SEASON4"
+	//ErrAPIKeyNotSet is the error returned when no global API key has been set
 	ErrAPIKeyNotSet = errors.New("goriot: API key has not been set. If you need a key visit https://developer.riotgames.com/")
-	apikey          string
-	BaseURL         = "https://prod.api.pvp.net/api/"
-	NA              = "na"
-	EUW             = "euw"
-	EUNE            = "eune"
-	SEASON3         = "SEASON3"
-	SEASON4         = "SEASON4"
 	smallRateChan   rateChan
 	longRateChan    rateChan
 )
@@ -30,10 +39,19 @@ type rateChan struct {
 	TriggerChan chan bool
 }
 
+//RiotError contains the http status code of the erro
+type RiotError struct {
+	StatusCode int
+}
+
+//SetAPIKey sets the global key for the Riot Games API. If you do not have one you can get one for free at
+//https://developer.riotgames.com/
 func SetAPIKey(key string) {
 	apikey = key
 }
 
+//SetSmallRateLimit allows a custom rate limit to be set. For at the time of this writing the default
+//for a development API key is 10 requests every 10 seconds
 func SetSmallRateLimit(numrequests int, pertime time.Duration) {
 	smallRateChan = rateChan{
 		RateQueue:   make(chan bool, numrequests),
@@ -41,6 +59,9 @@ func SetSmallRateLimit(numrequests int, pertime time.Duration) {
 	}
 	go rateLimitHandler(smallRateChan, pertime)
 }
+
+//SetLongRateLimit allows a custom rate limit to be set. For at the time of this writing the default
+//for a development API key is 500 requests every 10 minutes
 func SetLongRateLimit(numrequests int, pertime time.Duration) {
 	longRateChan = rateChan{
 		RateQueue:   make(chan bool, numrequests),
@@ -68,11 +89,12 @@ func timeTriggerWatcher(timeTrigger chan bool, returnChan chan bool) {
 	returnChan <- true
 }
 
+//IsKeySet returns a bool of if the global API key has been set
 func IsKeySet() bool {
 	return !(apikey == "")
 }
 
-func RequestAndUnmarshal(requestURL string, v interface{}) (err error) {
+func requestAndUnmarshal(requestURL string, v interface{}) (err error) {
 	checkRateLimiter(smallRateChan)
 	checkRateLimiter(longRateChan)
 	resp, err := http.Get(requestURL)
@@ -82,7 +104,7 @@ func RequestAndUnmarshal(requestURL string, v interface{}) (err error) {
 	checkTimeTrigger(smallRateChan)
 	checkTimeTrigger(longRateChan)
 	if resp.StatusCode != http.StatusOK {
-		return errors.New(fmt.Sprintf("Error: HTTP Status %d", resp.StatusCode))
+		return RiotError{StatusCode: resp.StatusCode}
 	}
 	defer resp.Body.Close()
 	body, err := ioutil.ReadAll(resp.Body)
@@ -110,4 +132,9 @@ func checkTimeTrigger(RateChan rateChan) {
 		default:
 		}
 	}
+}
+
+//Error prints the error message for a RiotError
+func (err RiotError) Error() string {
+	return fmt.Sprintf("Error: HTTP Status %d", err.StatusCode)
 }

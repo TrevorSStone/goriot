@@ -117,6 +117,7 @@ func TestTeamBySummonerID(t *testing.T) {
 
 func TestRateLimits(t *testing.T) {
 	runtime.GOMAXPROCS(runtime.NumCPU())
+	rateChecks := 100
 	if smallRateChan.RateQueue == nil {
 		SetSmallRateLimit(10, 10*time.Second)
 	}
@@ -125,19 +126,30 @@ func TestRateLimits(t *testing.T) {
 	}
 	SetAPIKey(personalkey)
 	returnchan := make(chan bool)
-	for i := 0; i < 123; i++ {
+	for i := 0; i < rateChecks; i++ {
 		go func() {
 			_, err := ChampionList(NA, false)
+
 			if err != nil {
-				t.Fatal(err.Error())
+				fmt.Println(err.Error())
 			}
 			returnchan <- true
 		}()
 	}
 
-	for i := 0; i < 123; i++ {
+	for i := 0; i < rateChecks; i++ {
 		<-returnchan
 		fmt.Println(i)
 	}
 
+}
+
+//ExampleSetSmallRateLimit shows the default way to set the smaller rate limit for developers
+func ExampleSetSmallRateLimit() {
+	SetSmallRateLimit(10, 10*time.Second)
+}
+
+//ExampleSetLongRateLimit shows the default way to set the larger rate limit for developers
+func ExampleSetLongRateLimit() {
+	SetLongRateLimit(500, 10*time.Minute)
 }

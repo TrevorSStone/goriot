@@ -66,7 +66,7 @@ type Summoner struct {
 //MasteriesBySummoner retrieves the mastery pages of the supplied summonerIDs from Riot Games API.
 //It returns a map of array pf MasteryPage with the key being the summonerID and any errors that occured from the server
 //The global API key must be set before use
-func MasteriesBySummoner(region string, summonerID ...int64) (masteries map[int64][]MasteryPage, err error) {
+func MasteriesBySummoner(region string, summonerID []int64) (masteries map[int64][]MasteryPage, err error) {
 	if !IsKeySet() {
 		return masteries, ErrAPIKeyNotSet
 	}
@@ -95,7 +95,7 @@ func MasteriesBySummoner(region string, summonerID ...int64) (masteries map[int6
 //RunesBySummoner retrieves the rune pages of the supplied summonerIDs from Riot Games API.
 //It returns a map of array of RunePage with the key being the summonerID and any errors that occured from the server
 //The global API key must be set before use
-func RunesBySummoner(region string, summonerID ...int64) (runes map[int64][]RunePage, err error) {
+func RunesBySummoner(region string, summonerID []int64) (runes map[int64][]RunePage, err error) {
 	if !IsKeySet() {
 		return runes, ErrAPIKeyNotSet
 	}
@@ -127,7 +127,7 @@ func RunesBySummoner(region string, summonerID ...int64) (runes map[int64][]Rune
 //The global API key must be set before use
 //WARNING: The map's key is not necessarily the same string used in the request. It is
 //recommended to only get data from this map using a loop instead of directly trying to access a key until this is fixed
-func SummonerByName(region string, name ...string) (summoners map[string]Summoner, err error) {
+func SummonerByName(region string, name []string) (summoners map[string]Summoner, err error) {
 	if !IsKeySet() {
 		return summoners, ErrAPIKeyNotSet
 	}
@@ -145,7 +145,7 @@ func SummonerByName(region string, name ...string) (summoners map[string]Summone
 //SummonerByID retrieves the summoner information of the provided summoner IDs from Riot Games API.
 //It returns a map of Summoner with the key being summonerID and any errors that occured from the server
 //The global API key must be set before use
-func SummonerByID(region string, summonerID ...int64) (summoners map[int64]Summoner, err error) {
+func SummonerByID(region string, summonerID []int64) (summoners map[int64]Summoner, err error) {
 	if !IsKeySet() {
 		return summoners, ErrAPIKeyNotSet
 	}
@@ -177,7 +177,7 @@ func SummonerByID(region string, summonerID ...int64) (summoners map[int64]Summo
 //SummonerNamesByID retrieves multiple summoner's information of the provided summoner IDs from Riot Games API.
 //It returns an map of string with the key being the summonerID and any errors that occured from the server
 //The global API key must be set before use
-func SummonerNamesByID(region string, summonerID ...int64) (summoners map[int64]string, err error) {
+func SummonerNamesByID(region string, summonerID []int64) (summoners map[int64]string, err error) {
 	if !IsKeySet() {
 		return summoners, ErrAPIKeyNotSet
 	}

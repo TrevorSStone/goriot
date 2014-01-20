@@ -63,7 +63,7 @@ func TestRankedStatsBySummoner(t *testing.T) {
 
 func TestMasteriesBySummoner(t *testing.T) {
 	SetAPIKey(personalkey)
-	_, err := MasteriesBySummoner(NA, 2112)
+	_, err := MasteriesBySummoner(NA, []int64{2112})
 	if err != nil {
 		t.Error(err.Error())
 	}
@@ -72,7 +72,7 @@ func TestMasteriesBySummoner(t *testing.T) {
 
 func TestRunesBySummoner(t *testing.T) {
 	SetAPIKey(personalkey)
-	_, err := RunesBySummoner(NA, 2112)
+	_, err := RunesBySummoner(NA, []int64{2112,36080568})
 	if err != nil {
 		t.Error(err.Error())
 	}
@@ -81,7 +81,7 @@ func TestRunesBySummoner(t *testing.T) {
 
 func TestSummonerByName(t *testing.T) {
 	SetAPIKey(personalkey)
-	_, err := SummonerByName(NA, "manticorex")
+	_, err := SummonerByName(NA, []string{"manticorex"})
 	if err != nil {
 		t.Error(err.Error())
 	}
@@ -90,7 +90,7 @@ func TestSummonerByName(t *testing.T) {
 
 func TestSummonerByID(t *testing.T) {
 	SetAPIKey(personalkey)
-	_, err := SummonerByID(NA, 2112)
+	_, err := SummonerByID(NA, []int64{2112})
 	if err != nil {
 		t.Error(err.Error())
 	}
@@ -99,7 +99,7 @@ func TestSummonerByID(t *testing.T) {
 
 func TestSummonerNamesByID(t *testing.T) {
 	SetAPIKey(personalkey)
-	_, err := SummonerNamesByID(NA, 2112, 1111)
+	_, err := SummonerNamesByID(NA, []int64{2112, 1111})
 	if err != nil {
 		t.Error(err.Error())
 	}

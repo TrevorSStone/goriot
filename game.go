@@ -34,7 +34,7 @@ type GameStat struct {
 	Assists                         int  `json:"assists"`
 	BarracksKilled                  int  `json:"barracksKilled"`
 	ChampionsKilled                 int  `json:"championsKilled"`
-	combatPlayerScore               int  `json:"combatPlayerScore"`
+	CombatPlayerScore               int  `json:"combatPlayerScore"`
 	ConsumablesPurchased            int  `json:"consumablesPurchased"`
 	DamageDealtPlayer               int  `json:"damageDealtPlayer"`
 	DoubleKills                     int  `json:"doubleKills"`
@@ -71,10 +71,10 @@ type GameStat struct {
 	NodeNeutralizeAssist            int  `json:"nodeNeutralizeAssist"`
 	NumDeaths                       int  `json:"numDeaths"`
 	NumItemsBought                  int  `json:"numItemsBought"`
-	ObjectivePlayerSocre            int  `json:"objectivePlayerScore"`
+	ObjectivePlayerScore            int  `json:"objectivePlayerScore"`
 	PentaKills                      int  `json:"pentaKills"`
 	PhysicalDamageDealtPlayer       int  `json:"physicalDamageDealtPlayer"`
-	PysicalDamageDealtToChampions   int  `json:"physicalDmageDealtToChampions"`
+	PhysicalDamageDealtToChampions  int  `json:"physicalDmageDealtToChampions"`
 	PhysicalDamageTaken             int  `json:"physicalDamageTaken"`
 	QuadraKills                     int  `json:"quadraKills"`
 	SightWardsBought                int  `json:"sightWardsBought"`

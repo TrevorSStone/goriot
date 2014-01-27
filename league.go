@@ -2,15 +2,15 @@ package goriot
 
 import (
 	"fmt"
-	"strconv"
 )
 
 //League represents a League of Legends league
 type League struct {
-	Entries []LeagueItem `json:"entries"`
-	Name    string       `json:"name"`
-	Queue   string       `json:"queue"`
-	Tier    string       `json:"tier"`
+	Entries       []LeagueItem `json:"entries"`
+	Name          string       `json:"name"`
+	ParticipantId string       `json:"participantId"`
+	Queue         string       `json:"queue"`
+	Tier          string       `json:"tier"`
 }
 
 //LeagueItem is an entry in a League. It represents a player or team
@@ -43,17 +43,15 @@ type MiniSeries struct {
 //LeagueBySummoner retrieves the league of the supplied summonerID from Riot Games API.
 //It returns a League and any errors that occured from the server
 //The global API key must be set before use
-func LeagueBySummoner(region string, summonerID int64) (league League, err error) {
-	tempMap := make(map[string]League)
+func LeagueBySummoner(region string, summonerID int64) (league []League, err error) {
 	if !IsKeySet() {
 		return league, ErrAPIKeyNotSet
 	}
-	summonerIDstr := strconv.FormatInt(summonerID, 10)
 	args := "api_key=" + apikey
-	url := fmt.Sprintf("%v/lol/%v/v2.2/league/by-summoner/%d?%v", BaseURL, region, summonerID, args)
-	err = requestAndUnmarshal(url, &tempMap)
+	url := fmt.Sprintf("%v/lol/%v/v2.3/league/by-summoner/%d?%v", BaseURL, region, summonerID, args)
+	err = requestAndUnmarshal(url, &league)
 	if err != nil {
 		return
 	}
-	return tempMap[summonerIDstr], err
+	return league, err
 }

@@ -43,6 +43,15 @@ func TestLeagueBySummoner(t *testing.T) {
 	fmt.Println("done")
 }
 
+func TestLeagueEntryBySummoner(t *testing.T) {
+	SetAPIKey(personalkey)
+	_, err := LeagueEntryBySummoner(NA, 2112)
+	if err != nil {
+		t.Error(err.Error())
+	}
+	fmt.Println("done")
+}
+
 func TestStatSummariesBySummoner(t *testing.T) {
 	SetAPIKey(personalkey)
 	_, err := StatSummariesBySummoner(NA, 2112, SEASON3)

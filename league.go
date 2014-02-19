@@ -55,3 +55,23 @@ func LeagueBySummoner(region string, summonerID int64) (league []League, err err
 	}
 	return league, err
 }
+
+//LeagueEntryBySummoner retrieves the league entry of the supplied summonerID.
+//The difference from LeagueBySummoner is that LeagueEntryBySummoner only returns data for the given summonerID vs everyone in that summoner's league
+func LeagueEntryBySummoner(region string, summonerID int64) (entry []LeagueItem, err error) {
+	if !IsKeySet() {
+		return entry, ErrAPIKeyNotSet
+	}
+	args := "api_key=" + apikey
+	url := fmt.Sprintf(
+		"%v/lol/%v/v2.3/league/by-summoner/%d/entry?%v",
+		BaseURL,
+		region,
+		summonerID,
+		args)
+	err = requestAndUnmarshal(url, &entry)
+	if err != nil {
+		return
+	}
+	return entry, err
+}

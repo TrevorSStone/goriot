@@ -43,6 +43,15 @@ func TestLeagueBySummoner(t *testing.T) {
 	fmt.Println("done")
 }
 
+func TestLeagueByChallenger(t *testing.T) {
+    SetAPIKey(personalkey)
+    _, err := LeagueByChallenger(NA, RANKED_SOLO_5x5)
+    if err != nil {
+        t.Error(err.Error())
+    }
+    fmt.Println("done")
+}
+
 func TestLeagueEntryBySummoner(t *testing.T) {
 	SetAPIKey(personalkey)
 	_, err := LeagueEntryBySummoner(NA, 2112)

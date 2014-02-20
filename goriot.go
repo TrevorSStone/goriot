@@ -28,6 +28,12 @@ var (
 	SEASON3 = "SEASON3"
 	//SEASON4 is the string of "SEASON4". Used to help prevent typos
 	SEASON4 = "SEASON4"
+	//Ranked Solo 5s
+	RANKED_SOLO_5x5 = "RANKED_SOLO_5x5"
+	//Ranked Team 3s
+	RANKED_TEAM_3x3 = "RANKED_TEAM_3x3"
+	//Ranked Team 5s
+	RANKED_TEAM_5x5 = "RANKED_TEAM_5x5"
 	//ErrAPIKeyNotSet is the error returned when no global API key has been set
 	ErrAPIKeyNotSet = errors.New("goriot: API key has not been set. If you need a key visit https://developer.riotgames.com/")
 	smallRateChan   rateChan

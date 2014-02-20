@@ -77,7 +77,7 @@ func LeagueEntryBySummoner(region string, summonerID int64) (entry []LeagueItem,
 }
 
 //LeagueByChallenger retrieves all the league entries for the Challenger group
-//It returns a League and any erros that occured from the server
+//It returns a League and any errors that occured from the server
 //The global API key must be set before use
 func LeagueByChallenger(region string, queueType string) (league League, err error) {
 	if !IsKeySet() {

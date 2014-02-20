@@ -16,14 +16,36 @@ var (
 	apikey string
 	//BaseURL is the base of the url used by Riot's API service
 	BaseURL = "https://prod.api.pvp.net/api"
-	//NA represents the string for the North American League of Legends Servers, only used as a helper to prevent typos
-	NA = "na"
-	//EUW represents the string for the West European League of Legends Servers,
+	//BR represents the string for the Brazilian League of Legends Servers,
 	//only used as a helper to prevent typos
-	EUW = "euw"
+	BR = "br"
 	//EUNE represents the string for the North Eastern European League of Legends Servers,
 	//only used as a helper to prevent typos
 	EUNE = "eune"
+	//EUW represents the string for the West European League of Legends Servers,
+	//only used as a helper to prevent typos
+	EUW = "euw"
+	//KR represents the string for the Korean League of Legends Servers,
+	//only used as a helper to prevent typos
+	KR = "kr"
+	//LAN represents the string for the Latin America North League of Legends Servers,
+	//only used as a helper to prevent typos
+	LAN = "lan"
+	//LAS represents the string for the Latin America South League of Legends Servers,
+	//only used as a helper to prevent typos
+	LAS = "las"
+	//NA represents the string for the North American League of Legends Servers,
+	//only used as a helper to prevent typos
+	NA = "na"
+	//OCE represents the string for the Oceanic League of Legends Servers,
+	//only used as a helper to prevent typos
+	OCE = "oce"
+	//RU represents the string for the Russian League of Legends Servers,
+	//only used as a helper to prevent typos
+	RU = "ru"
+	//TR represents the string for the Turkish League of Legends Servers,
+	//only used as a helper to prevent typos
+	TR = "tr"
 	//SEASON3 is the string of "SEASON3". Used to help prevent typos
 	SEASON3 = "SEASON3"
 	//SEASON4 is the string of "SEASON4". Used to help prevent typos

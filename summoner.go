@@ -126,7 +126,7 @@ func RunesBySummoner(region string, summonerID ...int64) (runes map[int64][]Rune
 //It returns a Map of Summoner with the key being the summoner name and any errors that occured from the server
 //The global API key must be set before use
 //WARNING: The map's key is not necessarily the same string used in the request. It is
-//recommended to only get data from this map using a loop instead of directly trying to access a key until this is fixed
+//recommended to use NormalizeSummonerName before calling this function
 func SummonerByName(region string, name ...string) (summoners map[string]Summoner, err error) {
 	if !IsKeySet() {
 		return summoners, ErrAPIKeyNotSet
@@ -215,4 +215,15 @@ func createSummonerIDString(summonerID []int64) (summonerIDstr string, err error
 		}
 	}
 	return
+}
+
+//NormalizeSummonerName takes an arbitrary number of strings and returns a string array containing the strings
+//standardized to league of legends internal standard (lowecase and strings removed)
+func NormalizeSummonerName(summonerNames ...string) []string {
+	for i, v := range summonerNames {
+		summonerName := strings.ToLower(v)
+		summonerName = strings.Replace(summonerName, " ", "", -1)
+		summonerNames[i] = summonerName
+	}
+	return summonerNames
 }

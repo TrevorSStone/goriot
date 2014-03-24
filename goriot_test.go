@@ -159,7 +159,35 @@ func TestRateLimits(t *testing.T) {
 		<-returnchan
 		fmt.Println(i)
 	}
+}
 
+func TestNormalizeSummonerName(t *testing.T) {
+	name := "MAnTi Co   RE x"
+	name2 := "Ç4 SextacyDragon"
+	name3 := "잘 못"
+	name = NormalizeSummonerName(name)[0]
+	if name != "manticorex" {
+		t.Fatalf("SummonerName Not Normallized: %s", name)
+	}
+	name2 = NormalizeSummonerName(name2)[0]
+	if name2 != "ç4sextacydragon" {
+		t.Fatalf("SummonerName Not Normallized: %s", name2)
+	}
+	name3 = NormalizeSummonerName(name3)[0]
+	if name3 != "잘못" {
+		t.Fatalf("SummonerName Not Normallized: %s", name3)
+	}
+	names := []string{"MantIc oreX", "Ç4 Sexta cyDragon", "잘 못"}
+	NormalizeSummonerName(names...)
+	if names[0] != "manticorex" {
+		t.Fatalf("SummonerName Not Normallized: %s", name)
+	}
+	if names[1] != "ç4sextacydragon" {
+		t.Fatalf("SummonerName Not Normallized: %s", name2)
+	}
+	if names[2] != "잘못" {
+		t.Fatalf("SummonerName Not Normallized: %s", name3)
+	}
 }
 
 //ExampleSetSmallRateLimit shows the default way to set the smaller rate limit for developers

@@ -14,17 +14,16 @@ type masteryBook struct {
 
 //MasteryPage represents a League of Legends mastery page
 type MasteryPage struct {
-	Current bool     `json:"current"`
-	ID      int64    `json:"id"`
-	Name    string   `json:"name"`
-	Talents []Talent `json:"talents"`
+	Current   bool      `json:"current"`
+	ID        int64     `json:"id"`
+	Name      string    `json:"name"`
+	Masteries []Mastery `json:"masteries"`
 }
 
-//Talent is a amstery inside of a Mastery Page
-type Talent struct {
-	ID   int    `json:"id"`
-	Name string `json:"name"`
-	Rank int    `json:"rank"`
+//Mastery located inside a page
+type Mastery struct {
+	ID   int `json:"id"`
+	Rank int `json:"rank"`
 }
 
 type runeBook struct {
@@ -77,7 +76,7 @@ func MasteriesBySummoner(region string, summonerID ...int64) (masteries map[int6
 		return
 	}
 	args := "api_key=" + apikey
-	url := fmt.Sprintf("%v/lol/%v/v1.3/summoner/%v/masteries?%v", BaseURL, region, summonerIDstr, args)
+	url := fmt.Sprintf("%v/lol/%v/v1.4/summoner/%v/masteries?%v", BaseURL, region, summonerIDstr, args)
 	err = requestAndUnmarshal(url, &pages)
 	if err != nil {
 		return

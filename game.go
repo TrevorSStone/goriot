@@ -13,6 +13,7 @@ type Game struct {
 	GameMode      string   `json:"gameMode"`
 	GameType      string   `json:"gameType"`
 	Invalid       bool     `json:"invalid"`
+	IPEarned      int      `json:"ipEarned"`
 	Level         int      `json:"level"`
 	MapID         int      `json:"mapId"`
 	Spell1        int      `json:"spell1"`

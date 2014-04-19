@@ -56,7 +56,7 @@ type AggregatedStats struct {
 	TotalChampionKills          int `json:"totalChampionKills"`
 	TotalDamageDealt            int `json:"totalDamageDealt"`
 	TotalDamageTaken            int `json:"totalDamageTaken"`
-	TotalDeathsPerSession		int `json:"totalDeathsPerSession"`
+	TotalDeathsPerSession       int `json:"totalDeathsPerSession"`
 	TotalDoubleKills            int `json:"totalDoubleKills"`
 	TotalFirstBlood             int `json:"totalFirstBlood"`
 	TotalGoldEarned             int `json:"totalGoldEarned"`

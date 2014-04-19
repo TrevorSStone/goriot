@@ -125,7 +125,7 @@ func SummonerByName(region string, name ...string) (summoners map[string]Summone
 	names := strings.Join(name, ", ")
 	summoners = make(map[string]Summoner)
 	args := "api_key=" + apikey
-	url := fmt.Sprintf("%v/lol/%v/v1.3/summoner/by-name/%v?%v", BaseURL, region, names, args)
+	url := fmt.Sprintf("%v/lol/%v/v1.4/summoner/by-name/%v?%v", BaseURL, region, names, args)
 	err = requestAndUnmarshal(url, &summoners)
 	if err != nil {
 		return
@@ -149,7 +149,7 @@ func SummonerByID(region string, summonerID ...int64) (summoners map[int64]Summo
 	}
 
 	args := "api_key=" + apikey
-	url := fmt.Sprintf("%v/lol/%v/v1.3/summoner/%v?%v", BaseURL, region, summonerIDstr, args)
+	url := fmt.Sprintf("%v/lol/%v/v1.4/summoner/%v?%v", BaseURL, region, summonerIDstr, args)
 
 	err = requestAndUnmarshal(url, &summonersString)
 	if err != nil {
@@ -179,7 +179,7 @@ func SummonerNamesByID(region string, summonerID ...int64) (summoners map[int64]
 		return
 	}
 	args := "api_key=" + apikey
-	url := fmt.Sprintf("%v/lol/%v/v1.3/summoner/%v/name?%v", BaseURL, region, summonerIDstr, args)
+	url := fmt.Sprintf("%v/lol/%v/v1.4/summoner/%v/name?%v", BaseURL, region, summonerIDstr, args)
 
 	err = requestAndUnmarshal(url, &summonerNames)
 	if err != nil {

@@ -41,16 +41,8 @@ type RunePage struct {
 
 //RuneSlot is a slot for a Rune to go on a RunePage
 type RuneSlot struct {
-	Rune       Rune `json:"rune"`
-	RuneSlotID int  `json:"runeSlotId"`
-}
-
-//Rune is a League of Legends Rune
-type Rune struct {
-	Description string `json:"description"`
-	ID          int    `json:"id"`
-	Name        string `json:"name"`
-	Tier        int    `json:"tier"`
+	RuneId     int `json:"runeId"`
+	RuneSlotID int `json:"runeSlotId"`
 }
 
 //Summoner is a player of League of Legends
@@ -105,7 +97,7 @@ func RunesBySummoner(region string, summonerID ...int64) (runes map[int64][]Rune
 		return
 	}
 	args := "api_key=" + apikey
-	url := fmt.Sprintf("%v/lol/%v/v1.3/summoner/%v/runes?%v", BaseURL, region, summonerIDstr, args)
+	url := fmt.Sprintf("%v/lol/%v/v1.4/summoner/%v/runes?%v", BaseURL, region, summonerIDstr, args)
 
 	err = requestAndUnmarshal(url, &pages)
 	if err != nil {

@@ -14,17 +14,16 @@ type masteryBook struct {
 
 //MasteryPage represents a League of Legends mastery page
 type MasteryPage struct {
-	Current bool     `json:"current"`
-	ID      int64    `json:"id"`
-	Name    string   `json:"name"`
-	Talents []Talent `json:"talents"`
+	Current   bool      `json:"current"`
+	ID        int64     `json:"id"`
+	Name      string    `json:"name"`
+	Masteries []Mastery `json:"masteries"`
 }
 
-//Talent is a amstery inside of a Mastery Page
-type Talent struct {
-	ID   int    `json:"id"`
-	Name string `json:"name"`
-	Rank int    `json:"rank"`
+//Mastery located inside a page
+type Mastery struct {
+	ID   int `json:"id"`
+	Rank int `json:"rank"`
 }
 
 type runeBook struct {
@@ -42,16 +41,8 @@ type RunePage struct {
 
 //RuneSlot is a slot for a Rune to go on a RunePage
 type RuneSlot struct {
-	Rune       Rune `json:"rune"`
-	RuneSlotID int  `json:"runeSlotId"`
-}
-
-//Rune is a League of Legends Rune
-type Rune struct {
-	Description string `json:"description"`
-	ID          int    `json:"id"`
-	Name        string `json:"name"`
-	Tier        int    `json:"tier"`
+	RuneId     int `json:"runeId"`
+	RuneSlotID int `json:"runeSlotId"`
 }
 
 //Summoner is a player of League of Legends
@@ -77,7 +68,7 @@ func MasteriesBySummoner(region string, summonerID ...int64) (masteries map[int6
 		return
 	}
 	args := "api_key=" + apikey
-	url := fmt.Sprintf("%v/lol/%v/v1.3/summoner/%v/masteries?%v", BaseURL, region, summonerIDstr, args)
+	url := fmt.Sprintf("%v/lol/%v/v1.4/summoner/%v/masteries?%v", BaseURL, region, summonerIDstr, args)
 	err = requestAndUnmarshal(url, &pages)
 	if err != nil {
 		return
@@ -106,7 +97,7 @@ func RunesBySummoner(region string, summonerID ...int64) (runes map[int64][]Rune
 		return
 	}
 	args := "api_key=" + apikey
-	url := fmt.Sprintf("%v/lol/%v/v1.3/summoner/%v/runes?%v", BaseURL, region, summonerIDstr, args)
+	url := fmt.Sprintf("%v/lol/%v/v1.4/summoner/%v/runes?%v", BaseURL, region, summonerIDstr, args)
 
 	err = requestAndUnmarshal(url, &pages)
 	if err != nil {
@@ -134,7 +125,7 @@ func SummonerByName(region string, name ...string) (summoners map[string]Summone
 	names := strings.Join(name, ", ")
 	summoners = make(map[string]Summoner)
 	args := "api_key=" + apikey
-	url := fmt.Sprintf("%v/lol/%v/v1.3/summoner/by-name/%v?%v", BaseURL, region, names, args)
+	url := fmt.Sprintf("%v/lol/%v/v1.4/summoner/by-name/%v?%v", BaseURL, region, names, args)
 	err = requestAndUnmarshal(url, &summoners)
 	if err != nil {
 		return
@@ -158,7 +149,7 @@ func SummonerByID(region string, summonerID ...int64) (summoners map[int64]Summo
 	}
 
 	args := "api_key=" + apikey
-	url := fmt.Sprintf("%v/lol/%v/v1.3/summoner/%v?%v", BaseURL, region, summonerIDstr, args)
+	url := fmt.Sprintf("%v/lol/%v/v1.4/summoner/%v?%v", BaseURL, region, summonerIDstr, args)
 
 	err = requestAndUnmarshal(url, &summonersString)
 	if err != nil {
@@ -188,7 +179,7 @@ func SummonerNamesByID(region string, summonerID ...int64) (summoners map[int64]
 		return
 	}
 	args := "api_key=" + apikey
-	url := fmt.Sprintf("%v/lol/%v/v1.3/summoner/%v/name?%v", BaseURL, region, summonerIDstr, args)
+	url := fmt.Sprintf("%v/lol/%v/v1.4/summoner/%v/name?%v", BaseURL, region, summonerIDstr, args)
 
 	err = requestAndUnmarshal(url, &summonerNames)
 	if err != nil {

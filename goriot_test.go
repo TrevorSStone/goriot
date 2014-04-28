@@ -25,6 +25,15 @@ func TestChampionsList(t *testing.T) {
 	fmt.Println("done")
 }
 
+func TestChampionByID(t *testing.T) {
+	SetAPIKey(personalkey)
+	_, err := ChampionByID(NA, 1)
+	if err != nil {
+		t.Error(err.Error())
+	}
+	fmt.Println("done")
+}
+
 func TestRecentGameBySummoner(t *testing.T) {
 	SetAPIKey(personalkey)
 	_, err := RecentGameBySummoner(NA, 2112)

@@ -6,17 +6,12 @@ import (
 
 //Champion represents a League of Legends champion
 type Champion struct {
-	Active            bool   `json:"active"`
-	AttackRank        int    `json:"attackRank"`
-	BotEnabled        bool   `json:"botEnabled"`
-	BotMmEnabled      bool   `json:"botMmEnabled"`
-	DefenseRank       int    `json:"defenseRank"`
-	DifficultyRank    int    `json:"difficultyRank"`
-	FreeToPlay        bool   `json:"freeToPlay"`
-	ID                int    `json:"id"`
-	MagicRank         int    `json:"magicRank"`
-	Name              string `json:"name"`
-	RankedPlayEnabled bool   `json:"rankedPlayEnabled"`
+	Active            bool `json:"active"`
+	BotEnabled        bool `json:"botEnabled"`
+	BotMmEnabled      bool `json:"botMmEnabled"`
+	FreeToPlay        bool `json:"freeToPlay"`
+	ID                int  `json:"id"`
+	RankedPlayEnabled bool `json:"rankedPlayEnabled"`
 }
 
 type championList struct {
@@ -37,11 +32,29 @@ func ChampionList(region string, freetoplay bool) (champions []Champion, err err
 		args = "freeToPlay=true&"
 	}
 	args += "api_key=" + apikey
-	url := fmt.Sprintf("%v/lol/%v/v1.1/champion?%v", BaseURL, region, args)
+	url := fmt.Sprintf("%v/lol/%v/v1.2/champion?%v", BaseURL, region, args)
 	err = requestAndUnmarshal(url, &champs)
 	if err != nil {
 		return
 	}
 
 	return champs.Champions, err
+}
+
+//ChampsionByID retrieves the champion from the Riot Games API.
+//It returns a single Champion and any errors that occured from the server
+//The global API key must be set before use
+func ChampionByID(region string, id int) (champion Champion, err error) {
+	if !IsKeySet() {
+		return champion, ErrAPIKeyNotSet
+	}
+	var args string
+	args += "api_key=" + apikey
+	url := fmt.Sprintf("%v/lol/%v/v1.2/champion/%d?%v", BaseURL, region, id, args)
+	err = requestAndUnmarshal(url, &champion)
+	if err != nil {
+		return
+	}
+
+	return champion, err
 }

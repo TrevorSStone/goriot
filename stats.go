@@ -87,7 +87,6 @@ type RankedStats struct {
 //ChampionStats are the stats for a League of Legends player's champion in ranked
 type ChampionStats struct {
 	ID    int             `json:"id"`
-	Name  string          `json:"name"`
 	Stats AggregatedStats `json:"stats"`
 }
 
@@ -104,7 +103,7 @@ func StatSummariesBySummoner(region string, summonerID int64, season string) (st
 		args = fmt.Sprintf("season=%s&", season)
 	}
 	args += "api_key=" + apikey
-	url := fmt.Sprintf("%v/lol/%v/v1.2/stats/by-summoner/%d/summary?%v", BaseURL, region, summonerID, args)
+	url := fmt.Sprintf("%v/lol/%v/v1.3/stats/by-summoner/%d/summary?%v", BaseURL, region, summonerID, args)
 
 	err = requestAndUnmarshal(url, &list)
 	if err != nil {
@@ -125,7 +124,7 @@ func RankedStatsBySummoner(region string, summonerID int64, season string) (stat
 		args = fmt.Sprintf("season=%s&", season)
 	}
 	args += "api_key=" + apikey
-	url := fmt.Sprintf("%v/lol/%v/v1.2/stats/by-summoner/%d/ranked?%v", BaseURL, region, summonerID, args)
+	url := fmt.Sprintf("%v/lol/%v/v1.3/stats/by-summoner/%d/ranked?%v", BaseURL, region, summonerID, args)
 
 	err = requestAndUnmarshal(url, &stats)
 	if err != nil {

@@ -72,11 +72,6 @@ type RiotError struct {
 	StatusCode int
 }
 
-//Constructs the url
-func ConrstructBaseURL() {
-
-}
-
 //SetAPIKey sets the global key for the Riot Games API. If you do not have one you can get one for free at
 //https://developer.riotgames.com/
 func SetAPIKey(key string) {

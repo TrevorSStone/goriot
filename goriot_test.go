@@ -8,7 +8,7 @@ import (
 )
 
 const (
-	personalkey = "your-api-key-here"
+	personalkey = "your-key-here"
 )
 
 func TestSetup(t *testing.T) {

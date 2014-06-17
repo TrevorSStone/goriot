@@ -48,7 +48,7 @@ func LeagueBySummoner(region string, summonerID int64) (league []League, err err
 		return league, ErrAPIKeyNotSet
 	}
 	args := "api_key=" + apikey
-	url := fmt.Sprintf("%v/lol/%v/v2.3/league/by-summoner/%d?%v", BaseURL, region, summonerID, args)
+	url := fmt.Sprintf("https://%v.%v/lol/%v/v2.3/league/by-summoner/%d?%v", region, BaseURL, region, summonerID, args)
 	err = requestAndUnmarshal(url, &league)
 	if err != nil {
 		return
@@ -64,7 +64,8 @@ func LeagueEntryBySummoner(region string, summonerID int64) (entry []LeagueItem,
 	}
 	args := "api_key=" + apikey
 	url := fmt.Sprintf(
-		"%v/lol/%v/v2.3/league/by-summoner/%d/entry?%v",
+		"https://%v.%v/lol/%v/v2.3/league/by-summoner/%d/entry?%v",
+		region,
 		BaseURL,
 		region,
 		summonerID,
@@ -88,7 +89,8 @@ func LeagueByChallenger(region string, queueType string) (league League, err err
 		queueType,
 		apikey)
 	url := fmt.Sprintf(
-		"%v/lol/%v/v2.3/league/challenger?%v",
+		"https://%v.%v/lol/%v/v2.3/league/challenger?%v",
+		region,
 		BaseURL,
 		region,
 		args)

@@ -15,7 +15,7 @@ import (
 var (
 	apikey string
 	//BaseURL is the base of the url used by Riot's API service
-	BaseURL = "https://prod.api.pvp.net/api"
+	BaseURL = "api.pvp.net/api"
 	//BR represents the string for the Brazilian League of Legends Servers,
 	//only used as a helper to prevent typos
 	BR = "br"
@@ -70,6 +70,11 @@ type rateChan struct {
 //RiotError contains the http status code of the erro
 type RiotError struct {
 	StatusCode int
+}
+
+//Constructs the url
+func ConrstructBaseURL() {
+
 }
 
 //SetAPIKey sets the global key for the Riot Games API. If you do not have one you can get one for free at

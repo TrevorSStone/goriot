@@ -81,7 +81,7 @@ func TeamBySummonerID(region string, summonerID int64) (team []Team, err error) 
 		return team, ErrAPIKeyNotSet
 	}
 	args := "api_key=" + apikey
-	url := fmt.Sprintf("%v/lol/%v/v2.2/team/by-summoner/%d?%v", BaseURL, region, summonerID, args)
+	url := fmt.Sprintf("https://%v.%v/lol/%v/v2.2/team/by-summoner/%d?%v", region, BaseURL, region, summonerID, args)
 
 	err = requestAndUnmarshal(url, &team)
 	if err != nil {

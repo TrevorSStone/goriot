@@ -15,7 +15,7 @@ import (
 var (
 	apikey string
 	//BaseURL is the base of the url used by Riot's API service
-	BaseURL = "https://prod.api.pvp.net/api"
+	BaseURL = "api.pvp.net/api"
 	//BR represents the string for the Brazilian League of Legends Servers,
 	//only used as a helper to prevent typos
 	BR = "br"

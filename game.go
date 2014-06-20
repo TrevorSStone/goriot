@@ -123,7 +123,7 @@ func RecentGameBySummoner(region string, summonerID int64) (games []Game, err er
 		return games, ErrAPIKeyNotSet
 	}
 	args := "api_key=" + apikey
-	url := fmt.Sprintf("%v/lol/%v/v1.3/game/by-summoner/%d/recent?%v", BaseURL, region, summonerID, args)
+	url := fmt.Sprintf("https://%v.%v/lol/%v/v1.3/game/by-summoner/%d/recent?%v", region, BaseURL, region, summonerID, args)
 	err = requestAndUnmarshal(url, &gameslist)
 	if err != nil {
 		return

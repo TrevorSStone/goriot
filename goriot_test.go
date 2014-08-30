@@ -2,13 +2,14 @@ package goriot
 
 import (
 	"fmt"
+	"os"
 	"runtime"
 	"testing"
 	"time"
 )
 
-const (
-	personalkey = "your-key-here"
+var (
+	personalkey = os.Getenv("RIOTAPIKEY_TEST")
 )
 
 func TestSetup(t *testing.T) {

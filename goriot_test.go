@@ -135,7 +135,16 @@ func TestSummonerNamesByID(t *testing.T) {
 
 func TestTeamBySummonerID(t *testing.T) {
 	SetAPIKey(personalkey)
-	_, err := TeamBySummonerID(NA, 2112)
+	_, err := TeamBySummonerID(NA, 24199871)
+	if err != nil {
+		t.Error(err.Error())
+	}
+	fmt.Println("done")
+}
+
+func TestTeamByTeamID(t *testing.T) {
+	SetAPIKey(personalkey)
+	_, err := TeamByTeamID(NA, "TEAM-9179f610-7a48-11e3-b350-782bcb4d0bb2")
 	if err != nil {
 		t.Error(err.Error())
 	}

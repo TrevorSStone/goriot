@@ -71,6 +71,24 @@ func TestLeagueEntryBySummoner(t *testing.T) {
 	fmt.Println("done")
 }
 
+func TestLeagueByTeam(t *testing.T) {
+	SetAPIKey(personalkey)
+	_, err := LeagueByTeam(NA, "TEAM-9179f610-7a48-11e3-b350-782bcb4d0bb2")
+	if err != nil {
+		t.Error(err.Error())
+	}
+	fmt.Println("done")
+}
+
+func TestLeagueEntryByTeam(t *testing.T) {
+	SetAPIKey(personalkey)
+	_, err := LeagueEntryByTeam(NA, "TEAM-9179f610-7a48-11e3-b350-782bcb4d0bb2")
+	if err != nil {
+		t.Error(err.Error())
+	}
+	fmt.Println("done")
+}
+
 func TestStatSummariesBySummoner(t *testing.T) {
 	SetAPIKey(personalkey)
 	_, err := StatSummariesBySummoner(NA, 2112, SEASON3)

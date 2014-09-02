@@ -1,6 +1,7 @@
 package goriot
 
 import (
+	"errors"
 	"fmt"
 )
 
@@ -87,5 +88,21 @@ func TeamBySummonerID(region string, summonerID int64) (team []Team, err error) 
 	if err != nil {
 		return
 	}
+	return
+}
+
+func createTeamIDString(teamID []string) (teamIDstr string, err error) {
+
+	if len(teamID) > 10 {
+		return teamIDstr, errors.New("A Maximum of 10 TeamIDs are allowed")
+	}
+
+	for k, v := range teamID {
+		teamIDstr += v
+		if k != len(teamID)-1 {
+			teamIDstr += ","
+		}
+	}
+
 	return
 }

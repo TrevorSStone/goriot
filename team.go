@@ -3,7 +3,6 @@ package goriot
 import (
 	"errors"
 	"fmt"
-	"errors"
 	"strconv"
 )
 
@@ -151,21 +150,5 @@ func createTeamIDString(teamID []string) (teamIDstr string, err error) {
 			teamIDstr += ","
 		}
 	}
-	return
-}
-
-func createTeamIDString(teamID []string) (teamIDstr string, err error) {
-
-	if len(teamID) > 10 {
-		return teamIDstr, errors.New("A Maximum of 10 TeamIDs are allowed")
-	}
-
-	for k, v := range teamID {
-		teamIDstr += v
-		if k != len(teamID)-1 {
-			teamIDstr += ","
-		}
-	}
-
 	return
 }

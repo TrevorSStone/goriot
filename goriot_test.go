@@ -2,13 +2,14 @@ package goriot
 
 import (
 	"fmt"
+	"os"
 	"runtime"
 	"testing"
 	"time"
 )
 
-const (
-	personalkey = "your-key-here"
+var (
+	personalkey = os.Getenv("RIOTAPIKEY_TEST")
 )
 
 func TestSetup(t *testing.T) {
@@ -64,6 +65,24 @@ func TestLeagueByChallenger(t *testing.T) {
 func TestLeagueEntryBySummoner(t *testing.T) {
 	SetAPIKey(personalkey)
 	_, err := LeagueEntryBySummoner(NA, 2112)
+	if err != nil {
+		t.Error(err.Error())
+	}
+	fmt.Println("done")
+}
+
+func TestLeagueByTeam(t *testing.T) {
+	SetAPIKey(personalkey)
+	_, err := LeagueByTeam(NA, "TEAM-9179f610-7a48-11e3-b350-782bcb4d0bb2")
+	if err != nil {
+		t.Error(err.Error())
+	}
+	fmt.Println("done")
+}
+
+func TestLeagueEntryByTeam(t *testing.T) {
+	SetAPIKey(personalkey)
+	_, err := LeagueEntryByTeam(NA, "TEAM-9179f610-7a48-11e3-b350-782bcb4d0bb2")
 	if err != nil {
 		t.Error(err.Error())
 	}
@@ -135,7 +154,16 @@ func TestSummonerNamesByID(t *testing.T) {
 
 func TestTeamBySummonerID(t *testing.T) {
 	SetAPIKey(personalkey)
-	_, err := TeamBySummonerID(NA, 2112)
+	_, err := TeamBySummonerID(NA, 24199871)
+	if err != nil {
+		t.Error(err.Error())
+	}
+	fmt.Println("done")
+}
+
+func TestTeamByTeamID(t *testing.T) {
+	SetAPIKey(personalkey)
+	_, err := TeamByTeamID(NA, "TEAM-9179f610-7a48-11e3-b350-782bcb4d0bb2")
 	if err != nil {
 		t.Error(err.Error())
 	}

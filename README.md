@@ -14,7 +14,7 @@ To install just use
 go get github.com/TrevorSStone/goriot
 ```
 
-To run tests successfully change the apikey value at the top to your key. Key's can be obtained through https://developer.riotgames.com/
+To run tests successfully change the `RIOTAPIKEY_TEST` environment variable to your key. Key's can be obtained through https://developer.riotgames.com/
 
 Tests will take upwards of 130s if ran together due to the default rate limiting settings. This is because it has to block for 10s after each 10 requests. If you have different rate limits, change the tests to have them run faster.
 

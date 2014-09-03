@@ -31,8 +31,8 @@ type Participant struct {
 }
 
 type ParticipantIdentity struct {
-	ParticipantId int    `json:"participantId"`
-	Player        Player `json:"player"`
+	ParticipantId int         `json:"participantId"`
+	Player        MatchPlayer `json:"player"`
 }
 
 type TeamGameDetails struct {

@@ -1,5 +1,10 @@
 package goriot
 
+import (
+	"fmt"
+	"strconv"
+)
+
 type MatchDetail struct {
 	MapID                 int                   `json:"mapId"`
 	MatchCreation         int64                 `json:"matchCreation"`
@@ -206,4 +211,29 @@ type ParticipantFrame struct {
 type Position struct {
 	X int `json:"x"`
 	Y int `json:"y"`
+}
+
+// MatchByMatchID requests the MatchDetails from Riot
+// You can optionally include the timeline of events if needed
+// API key needs to be set prior to use
+func MatchByMatchID(region string, matchID int64, includeTimeline bool) (match MatchDetail, err error) {
+	if !IsKeySet() {
+		return match, ErrAPIKeyNotSet
+	}
+
+	args := "api_key=" + apikey + "&includeTimeline=" + strconv.FormatBool(includeTimeline)
+	url := fmt.Sprintf(
+		"https://%v.%v/lol/%v/v2.2/match/%d?%v",
+		region,
+		BaseURL,
+		region,
+		matchID,
+		args)
+
+	err = requestAndUnmarshal(url, &match)
+	if err != nil {
+		return match, err
+	}
+
+	return match, nil
 }

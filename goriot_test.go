@@ -142,6 +142,24 @@ func TestTeamBySummonerID(t *testing.T) {
 	fmt.Println("done")
 }
 
+func TestMatchByMatchIDNoTimeline(t *testing.T) {
+	SetAPIKey(personalkey)
+	_, err := MatchByMatchID(NA, 1495236003, false)
+	if err != nil {
+		t.Error(err.Error())
+	}
+	fmt.Println("done")
+}
+
+func TestMatchByMatchIDWithTimeline(t *testing.T) {
+	SetAPIKey(personalkey)
+	_, err := MatchByMatchID(NA, 1495236003, true)
+	if err != nil {
+		t.Error(err.Error())
+	}
+	fmt.Println("done")
+}
+
 func TestRateLimits(t *testing.T) {
 	runtime.GOMAXPROCS(runtime.NumCPU())
 	rateChecks := 100

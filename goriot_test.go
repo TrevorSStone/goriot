@@ -172,7 +172,7 @@ func TestTeamByTeamID(t *testing.T) {
 
 func TestMatchByMatchIDNoTimeline(t *testing.T) {
 	SetAPIKey(personalkey)
-	_, err := MatchByMatchID(NA, 1495236003, false)
+	_, err := MatchByMatchID(NA, false, 1495236003)
 	if err != nil {
 		t.Error(err.Error())
 	}
@@ -181,7 +181,7 @@ func TestMatchByMatchIDNoTimeline(t *testing.T) {
 
 func TestMatchByMatchIDWithTimeline(t *testing.T) {
 	SetAPIKey(personalkey)
-	_, err := MatchByMatchID(NA, 1495236003, true)
+	_, err := MatchByMatchID(NA, true, 1495236003)
 	if err != nil {
 		t.Error(err.Error())
 	}

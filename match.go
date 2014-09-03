@@ -23,8 +23,8 @@ type MatchDetail struct {
 type Participant struct {
 	ChampionID    int                 `json:"championId"`
 	ParticipantID int                 `json:"participantId"`
-	SpellOneID    int                 `json:"spell1Id"`
-	SpellTwoID    int                 `json:"spell2Id"`
+	Spell1ID      int                 `json:"spell1Id"`
+	Spell2ID      int                 `json:"spell2Id"`
 	Stats         ParticipantStats    `json:"stats"`
 	TeamID        int                 `json:"teamId"`
 	Timeline      ParticipantTimeline `json:"timeline"`
@@ -216,7 +216,7 @@ type Position struct {
 // MatchByMatchID requests the MatchDetails from Riot
 // You can optionally include the timeline of events if needed
 // API key needs to be set prior to use
-func MatchByMatchID(region string, matchID int64, includeTimeline bool) (match MatchDetail, err error) {
+func MatchByMatchID(region string, includeTimeline bool, matchID int64) (match MatchDetail, err error) {
 	if !IsKeySet() {
 		return match, ErrAPIKeyNotSet
 	}

@@ -34,41 +34,22 @@ func MatchHistoryBySummonerID(
 		return playerHistory, ErrAPIKeyNotSet
 	}
 
-	// Check to see if champions are being filtered.
-	// There is 40 champion restriction when using
-	// createSummonerIDString. This restriction does
-	// not exist in the API
-	var championIDStr string
-	if championIDs == nil {
-		championIDStr = ""
-	} else {
-		championIDStr, err = createSummonerIDString(championIDs)
-		if err != nil {
-			championIDStr = ""
-		}
-	}
+	// create a filter for specific champions
+	var championIDStr string = intURLParameter(championIDs).String()
 
 	// check to see if specific queues are being filtered
-	var rankedQueuesStr string
-	if rankedQueues == nil {
-		rankedQueuesStr = ""
-	} else {
-		rankedQueuesStr, err = createTeamIDString(rankedQueues)
-		if err != nil {
-			rankedQueuesStr = ""
-		}
-	}
+	var rankedQueuesStr string = strURLParameter(rankedQueues).String()
 
 	// check for indexing
 	var beginIndexStr string
-	if beginIndex == -1 {
+	if beginIndex <= -1 {
 		beginIndexStr = ""
 	} else {
 		beginIndexStr = strconv.Itoa(beginIndex)
 	}
 
 	var endIndexStr string
-	if endIndex == -1 {
+	if endIndex <= -1 {
 		endIndexStr = ""
 	} else {
 		endIndexStr = strconv.Itoa(endIndex)
@@ -83,6 +64,7 @@ func MatchHistoryBySummonerID(
 		beginIndexStr,
 		endIndexStr)
 
+	// build url string, request, return payload
 	url := fmt.Sprintf(
 		"https://%v.%v/lol/%v/v2.2/matchhistory/%d?%v",
 		region,

@@ -198,6 +198,19 @@ func TestMatchHistoryBySummonerID(t *testing.T) {
 	fmt.Println("done")
 }
 
+func TestMatchHistoryBySummonerIDWithFilters(t *testing.T) {
+	SetAPIKey(personalkey)
+	champions := []int64{11, 45}
+	queues := []string{"RANKED_SOLO_5x5", "RANKED_TEAM_3x3", "RANKED_TEAM_5x5"}
+
+	_, err := MatchHistoryBySummonerID(
+		NA, 24199871, champions, queues, 1, -1)
+	if err != nil {
+		t.Error(err.Error())
+	}
+	fmt.Println("done")
+}
+
 func TestRateLimits(t *testing.T) {
 	runtime.GOMAXPROCS(runtime.NumCPU())
 	rateChecks := 100

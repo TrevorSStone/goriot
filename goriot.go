@@ -9,6 +9,8 @@ import (
 	"fmt"
 	"io/ioutil"
 	"net/http"
+	"strconv"
+	"strings"
 	"time"
 )
 
@@ -70,6 +72,26 @@ type rateChan struct {
 //RiotError contains the http status code of the erro
 type RiotError struct {
 	StatusCode int
+}
+
+// types for URL query parameter formatting
+type strURLParameter []string
+type intURLParameter []int64
+
+// Creates a comma separated string
+func (q strURLParameter) String() string {
+	return strings.Join(q, ",")
+}
+
+// Convers int64 slice to string slice and returns
+// comma separated string
+func (q intURLParameter) String() string {
+	s := make(strURLParameter, len(q))
+	for k, v := range q {
+		s[k] = strconv.FormatInt(v, 10)
+	}
+
+	return s.String()
 }
 
 //SetAPIKey sets the global key for the Riot Games API. If you do not have one you can get one for free at

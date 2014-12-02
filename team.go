@@ -76,11 +76,7 @@ func TeamBySummonerID(region string, summonerID ...int64) (teams map[int64][]Tea
 
 	teams = make(map[int64][]Team)
 	preTeams := make(map[string][]Team)
-
-	summonerIdStr, err := createSummonerIDString(summonerID)
-	if err != nil {
-		return nil, err
-	}
+	summonerIdStr := intURLParameter(summonerID).String()
 
 	args := "api_key=" + apikey
 	url := fmt.Sprintf("https://%v.%v/lol/%v/v2.4/team/by-summoner/%v?%v",
@@ -114,11 +110,7 @@ func TeamByTeamID(region string, teamID ...string) (teams map[string]Team, err e
 	}
 
 	teams = make(map[string]Team)
-
-	teamIdStr, err := createTeamIDString(teamID)
-	if err != nil {
-		return nil, err
-	}
+	teamIdStr := strURLParameter(teamID).String()
 
 	args := "api_key=" + apikey
 	url := fmt.Sprintf(

@@ -35,23 +35,19 @@ func MatchHistoryBySummonerID(
 	}
 
 	// create a filter for specific champions
-	var championIDStr string = intURLParameter(championIDs).String()
+	championIDStr := intURLParameter(championIDs).String()
 
 	// check to see if specific queues are being filtered
-	var rankedQueuesStr string = strURLParameter(rankedQueues).String()
+	rankedQueuesStr := strURLParameter(rankedQueues).String()
 
 	// check for indexing
-	var beginIndexStr string
-	if beginIndex <= -1 {
-		beginIndexStr = ""
-	} else {
+	beginIndexStr := ""
+	if beginIndex > -1 {
 		beginIndexStr = strconv.Itoa(beginIndex)
 	}
 
-	var endIndexStr string
-	if endIndex <= -1 {
-		endIndexStr = ""
-	} else {
+	endIndexStr := ""
+	if endIndex > -1 {
 		endIndexStr = strconv.Itoa(endIndex)
 	}
 

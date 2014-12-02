@@ -63,10 +63,8 @@ func MasteriesBySummoner(region string, summonerID ...int64) (masteries map[int6
 	}
 	masteries = make(map[int64][]MasteryPage)
 	var pages map[string]masteryBook
-	summonerIDstr, err := createSummonerIDString(summonerID)
-	if err != nil {
-		return
-	}
+	summonerIDstr := intURLParameter(summonerID).String()
+
 	args := "api_key=" + apikey
 	url := fmt.Sprintf("https://%v.%v/lol/%v/v1.4/summoner/%v/masteries?%v", region, BaseURL, region, summonerIDstr, args)
 	err = requestAndUnmarshal(url, &pages)
@@ -92,10 +90,8 @@ func RunesBySummoner(region string, summonerID ...int64) (runes map[int64][]Rune
 	}
 	runes = make(map[int64][]RunePage)
 	var pages map[string]runeBook
-	summonerIDstr, err := createSummonerIDString(summonerID)
-	if err != nil {
-		return
-	}
+	summonerIDstr := intURLParameter(summonerID).String()
+
 	args := "api_key=" + apikey
 	url := fmt.Sprintf("https://%v.%v/lol/%v/v1.4/summoner/%v/runes?%v", region, BaseURL, region, summonerIDstr, args)
 
@@ -122,7 +118,7 @@ func SummonerByName(region string, name ...string) (summoners map[string]Summone
 	if !IsKeySet() {
 		return summoners, ErrAPIKeyNotSet
 	}
-	names := strings.Join(name, ", ")
+	names := strURLParameter(name).String()
 	summoners = make(map[string]Summoner)
 	args := "api_key=" + apikey
 	url := fmt.Sprintf("https://%v.%v/lol/%v/v1.4/summoner/by-name/%v?%v", region, BaseURL, region, names, args)
@@ -143,10 +139,7 @@ func SummonerByID(region string, summonerID ...int64) (summoners map[int64]Summo
 
 	var summonersString map[string]Summoner
 	summoners = make(map[int64]Summoner)
-	summonerIDstr, err := createSummonerIDString(summonerID)
-	if err != nil {
-		return
-	}
+	summonerIDstr := intURLParameter(summonerID).String()
 
 	args := "api_key=" + apikey
 	url := fmt.Sprintf("https://%v.%v/lol/%v/v1.4/summoner/%v?%v", region, BaseURL, region, summonerIDstr, args)
@@ -174,10 +167,8 @@ func SummonerNamesByID(region string, summonerID ...int64) (summoners map[int64]
 	}
 	var summonerNames map[string]string
 	summoners = make(map[int64]string)
-	summonerIDstr, err := createSummonerIDString(summonerID)
-	if err != nil {
-		return
-	}
+	summonerIDstr := intURLParameter(summonerID).String()
+
 	args := "api_key=" + apikey
 	url := fmt.Sprintf("https://%v.%v/lol/%v/v1.4/summoner/%v/name?%v", region, BaseURL, region, summonerIDstr, args)
 

@@ -52,12 +52,7 @@ func LeagueBySummoner(region string, summonerID ...int64) (leagues map[int64][]L
 
 	leagues = make(map[int64][]League)
 	preLeagues := make(map[string][]League)
-
-	// Turn summoner array into string
-	summonerIDstr, err := createSummonerIDString(summonerID)
-	if err != nil {
-		return leagues, err
-	}
+	summonerIDstr := intURLParameter(summonerID).String()
 
 	args := "api_key=" + apikey
 	url := fmt.Sprintf(
@@ -98,12 +93,7 @@ func LeagueEntryBySummoner(region string, summonerID ...int64) (leagues map[int6
 
 	leagues = make(map[int64][]League)
 	preLeagues := make(map[string][]League)
-
-	// Turn summoner array into string
-	summonerIDstr, err := createSummonerIDString(summonerID)
-	if err != nil {
-		return leagues, err
-	}
+	summonerIDstr := intURLParameter(summonerID).String()
 
 	args := "api_key=" + apikey
 	url := fmt.Sprintf(
@@ -144,11 +134,7 @@ func LeagueByTeam(region string, teamID ...string) (leagues map[string][]League,
 	}
 
 	leagues = make(map[string][]League)
-
-	teamIDstr, err := createTeamIDString(teamID)
-	if err != nil {
-		return leagues, err
-	}
+	teamIDstr := strURLParameter(teamID).String()
 
 	args := "api_key=" + apikey
 	url := fmt.Sprintf(
@@ -180,11 +166,7 @@ func LeagueEntryByTeam(region string, teamID ...string) (leagues map[string][]Le
 	}
 
 	leagues = make(map[string][]League)
-
-	teamIDstr, err := createTeamIDString(teamID)
-	if err != nil {
-		return leagues, err
-	}
+	teamIDstr := strURLParameter(teamID).String()
 
 	args := "api_key=" + apikey
 	url := fmt.Sprintf(

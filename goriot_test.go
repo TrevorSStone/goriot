@@ -73,7 +73,7 @@ func TestLeagueEntryBySummoner(t *testing.T) {
 
 func TestLeagueByTeam(t *testing.T) {
 	SetAPIKey(personalkey)
-	_, err := LeagueByTeam(NA, "TEAM-9179f610-7a48-11e3-b350-782bcb4d0bb2")
+	_, err := LeagueByTeam(NA, "TEAM-74daa170-a1b3-11e3-b97f-782bcb4d0bb2")
 	if err != nil {
 		t.Error(err.Error())
 	}
@@ -82,7 +82,7 @@ func TestLeagueByTeam(t *testing.T) {
 
 func TestLeagueEntryByTeam(t *testing.T) {
 	SetAPIKey(personalkey)
-	_, err := LeagueEntryByTeam(NA, "TEAM-9179f610-7a48-11e3-b350-782bcb4d0bb2")
+	_, err := LeagueEntryByTeam(NA, "TEAM-74daa170-a1b3-11e3-b97f-782bcb4d0bb2")
 	if err != nil {
 		t.Error(err.Error())
 	}

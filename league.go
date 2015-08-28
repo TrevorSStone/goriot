@@ -58,7 +58,7 @@ func LeagueBySummoner(region string, summonerID ...int64) (leagues map[int64][]L
 	url := fmt.Sprintf(
 		"https://%v.%v/lol/%v/v2.5/league/by-summoner/%v?%v",
 		region,
-		BaseURL,
+		BaseAPIURL,
 		region,
 		summonerIDstr,
 		args)
@@ -99,7 +99,7 @@ func LeagueEntryBySummoner(region string, summonerID ...int64) (leagues map[int6
 	url := fmt.Sprintf(
 		"https://%v.%v/lol/%v/v2.5/league/by-summoner/%v/entry?%v",
 		region,
-		BaseURL,
+		BaseAPIURL,
 		region,
 		summonerIDstr,
 		args)
@@ -140,7 +140,7 @@ func LeagueByTeam(region string, teamID ...string) (leagues map[string][]League,
 	url := fmt.Sprintf(
 		"https://%v.%v/lol/%v/v2.5/league/by-team/%v?%v",
 		region,
-		BaseURL,
+		BaseAPIURL,
 		region,
 		teamIDstr,
 		args)
@@ -172,7 +172,7 @@ func LeagueEntryByTeam(region string, teamID ...string) (leagues map[string][]Le
 	url := fmt.Sprintf(
 		"https://%v.%v/lol/%v/v2.5/league/by-team/%v/entry?%v",
 		region,
-		BaseURL,
+		BaseAPIURL,
 		region,
 		teamIDstr,
 		args)
@@ -198,7 +198,7 @@ func LeagueByChallenger(region string, queueType string) (league League, err err
 	url := fmt.Sprintf(
 		"https://%v.%v/lol/%v/v2.5/league/challenger?%v",
 		region,
-		BaseURL,
+		BaseAPIURL,
 		region,
 		args)
 	err = requestAndUnmarshal(url, &league)

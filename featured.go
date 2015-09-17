@@ -4,6 +4,21 @@ import (
 	"fmt"
 )
 
+var (
+	RegionToPlatformId = map[string]string{
+		"br":   "BR1",
+		"eune": "EUN1",
+		"euw":  "EUW1",
+		"kr":   "KR",
+		"lan":  "LA1",
+		"las":  "LA2",
+		"na":   "NA1",
+		"oce":  "OC1",
+		"ru":   "RU",
+		"tr":   "TR1",
+	}
+)
+
 type FeaturedGame struct {
 	GameID            int           `json:"gameId"`
 	MapID             int           `json:"mapId"`
@@ -64,7 +79,7 @@ func FeaturedGameBySummonerID(region, summonerId string) (FeaturedGame, error) {
 		"https://%v.%v/consumer/getSpectatorGameInfo/%v/%v?%v",
 		region,
 		BaseObserverURL,
-		region,
+		RegionToPlatformId[region],
 		summonerId,
 		args,
 	)

@@ -158,6 +158,7 @@ type MatchPlayer struct {
 	MatchHistoryURI string `json:"matchHistoryUri"`
 	ProfileIcon     int    `json:"profileIcon"`
 	SummonerName    string `json:"summonerName"`
+	SummonerId      int    `json:"summonerId"`
 }
 
 type BannedChampion struct {

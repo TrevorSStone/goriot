@@ -80,7 +80,7 @@ func TeamBySummonerID(region string, summonerID ...int64) (teams map[int64][]Tea
 
 	args := "api_key=" + apikey
 	url := fmt.Sprintf("https://%v.%v/lol/%v/v2.4/team/by-summoner/%v?%v",
-		region, BaseURL, region, summonerIdStr, args)
+		region, BaseAPIURL, region, summonerIdStr, args)
 
 	err = requestAndUnmarshal(url, &preTeams)
 	if err != nil {
@@ -116,7 +116,7 @@ func TeamByTeamID(region string, teamID ...string) (teams map[string]Team, err e
 	url := fmt.Sprintf(
 		"https://%v.%v/lol/%v/v2.4/team/%v?%v",
 		region,
-		BaseURL,
+		BaseAPIURL,
 		region,
 		teamIdStr,
 		args)

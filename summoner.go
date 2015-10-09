@@ -66,7 +66,7 @@ func MasteriesBySummoner(region string, summonerID ...int64) (masteries map[int6
 	summonerIDstr := intURLParameter(summonerID).String()
 
 	args := "api_key=" + apikey
-	url := fmt.Sprintf("https://%v.%v/lol/%v/v1.4/summoner/%v/masteries?%v", region, BaseURL, region, summonerIDstr, args)
+	url := fmt.Sprintf("https://%v.%v/lol/%v/v1.4/summoner/%v/masteries?%v", region, BaseAPIURL, region, summonerIDstr, args)
 	err = requestAndUnmarshal(url, &pages)
 	if err != nil {
 		return
@@ -93,7 +93,7 @@ func RunesBySummoner(region string, summonerID ...int64) (runes map[int64][]Rune
 	summonerIDstr := intURLParameter(summonerID).String()
 
 	args := "api_key=" + apikey
-	url := fmt.Sprintf("https://%v.%v/lol/%v/v1.4/summoner/%v/runes?%v", region, BaseURL, region, summonerIDstr, args)
+	url := fmt.Sprintf("https://%v.%v/lol/%v/v1.4/summoner/%v/runes?%v", region, BaseAPIURL, region, summonerIDstr, args)
 
 	err = requestAndUnmarshal(url, &pages)
 	if err != nil {
@@ -121,7 +121,7 @@ func SummonerByName(region string, name ...string) (summoners map[string]Summone
 	names := strURLParameter(name).String()
 	summoners = make(map[string]Summoner)
 	args := "api_key=" + apikey
-	url := fmt.Sprintf("https://%v.%v/lol/%v/v1.4/summoner/by-name/%v?%v", region, BaseURL, region, names, args)
+	url := fmt.Sprintf("https://%v.%v/lol/%v/v1.4/summoner/by-name/%v?%v", region, BaseAPIURL, region, names, args)
 	err = requestAndUnmarshal(url, &summoners)
 	if err != nil {
 		return
@@ -142,7 +142,7 @@ func SummonerByID(region string, summonerID ...int64) (summoners map[int64]Summo
 	summonerIDstr := intURLParameter(summonerID).String()
 
 	args := "api_key=" + apikey
-	url := fmt.Sprintf("https://%v.%v/lol/%v/v1.4/summoner/%v?%v", region, BaseURL, region, summonerIDstr, args)
+	url := fmt.Sprintf("https://%v.%v/lol/%v/v1.4/summoner/%v?%v", region, BaseAPIURL, region, summonerIDstr, args)
 
 	err = requestAndUnmarshal(url, &summonersString)
 	if err != nil {
@@ -170,7 +170,7 @@ func SummonerNamesByID(region string, summonerID ...int64) (summoners map[int64]
 	summonerIDstr := intURLParameter(summonerID).String()
 
 	args := "api_key=" + apikey
-	url := fmt.Sprintf("https://%v.%v/lol/%v/v1.4/summoner/%v/name?%v", region, BaseURL, region, summonerIDstr, args)
+	url := fmt.Sprintf("https://%v.%v/lol/%v/v1.4/summoner/%v/name?%v", region, BaseAPIURL, region, summonerIDstr, args)
 
 	err = requestAndUnmarshal(url, &summonerNames)
 	if err != nil {

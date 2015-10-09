@@ -17,7 +17,11 @@ import (
 var (
 	apikey string
 	//BaseURL is the base of the url used by Riot's API service
-	BaseURL = "api.pvp.net/api"
+	BaseURL = "api.pvp.net"
+	//BaseURL is the base of the url used by Riot's API service
+	BaseAPIURL = BaseURL + "/api"
+	//BaseURL is the base of the url used by Riot's API service
+	BaseObserverURL = BaseURL + "/observer-mode/rest"
 	//BR represents the string for the Brazilian League of Legends Servers,
 	//only used as a helper to prevent typos
 	BR = "br"
@@ -148,6 +152,7 @@ func requestAndUnmarshal(requestURL string, v interface{}) (err error) {
 	checkRateLimiter(smallRateChan)
 	checkRateLimiter(longRateChan)
 	resp, err := http.Get(requestURL)
+	defer resp.Body.Close()
 	if err != nil {
 		return
 	}
@@ -156,7 +161,7 @@ func requestAndUnmarshal(requestURL string, v interface{}) (err error) {
 	if resp.StatusCode != http.StatusOK {
 		return RiotError{StatusCode: resp.StatusCode}
 	}
-	defer resp.Body.Close()
+
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
 		return

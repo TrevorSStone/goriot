@@ -64,7 +64,7 @@ func MatchHistoryBySummonerID(
 	url := fmt.Sprintf(
 		"https://%v.%v/lol/%v/v2.2/matchhistory/%d?%v",
 		region,
-		BaseURL,
+		BaseAPIURL,
 		region,
 		summonerID,
 		args)

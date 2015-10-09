@@ -32,7 +32,7 @@ func ChampionList(region string, freetoplay bool) (champions []Champion, err err
 		args = "freeToPlay=true&"
 	}
 	args += "api_key=" + apikey
-	url := fmt.Sprintf("https://%v.%v/lol/%v/v1.2/champion?%v", region, BaseURL, region, args)
+	url := fmt.Sprintf("https://%v.%v/lol/%v/v1.2/champion?%v", region, BaseAPIURL, region, args)
 	err = requestAndUnmarshal(url, &champs)
 	if err != nil {
 		return
@@ -50,7 +50,7 @@ func ChampionByID(region string, id int) (champion Champion, err error) {
 	}
 	var args string
 	args += "api_key=" + apikey
-	url := fmt.Sprintf("https://%v.%v/lol/%v/v1.2/champion/%d?%v", region, BaseURL, region, id, args)
+	url := fmt.Sprintf("https://%v.%v/lol/%v/v1.2/champion/%d?%v", region, BaseAPIURL, region, id, args)
 	err = requestAndUnmarshal(url, &champion)
 	if err != nil {
 		return

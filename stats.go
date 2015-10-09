@@ -103,7 +103,7 @@ func StatSummariesBySummoner(region string, summonerID int64, season string) (st
 		args = fmt.Sprintf("season=%s&", season)
 	}
 	args += "api_key=" + apikey
-	url := fmt.Sprintf("https://%v.%v/lol/%v/v1.3/stats/by-summoner/%d/summary?%v", region, BaseURL, region, summonerID, args)
+	url := fmt.Sprintf("https://%v.%v/lol/%v/v1.3/stats/by-summoner/%d/summary?%v", region, BaseAPIURL, region, summonerID, args)
 
 	err = requestAndUnmarshal(url, &list)
 	if err != nil {
@@ -124,7 +124,7 @@ func RankedStatsBySummoner(region string, summonerID int64, season string) (stat
 		args = fmt.Sprintf("season=%s&", season)
 	}
 	args += "api_key=" + apikey
-	url := fmt.Sprintf("https://%v.%v/lol/%v/v1.3/stats/by-summoner/%d/ranked?%v", region, BaseURL, region, summonerID, args)
+	url := fmt.Sprintf("https://%v.%v/lol/%v/v1.3/stats/by-summoner/%d/ranked?%v", region, BaseAPIURL, region, summonerID, args)
 
 	err = requestAndUnmarshal(url, &stats)
 	if err != nil {

@@ -28,6 +28,9 @@ type Participant struct {
 	Stats         ParticipantStats    `json:"stats"`
 	TeamID        int                 `json:"teamId"`
 	Timeline      ParticipantTimeline `json:"timeline"`
+	ProfileIconID int                 `json:"profileIconId"`
+	SummonerName  string              `json:"summonerName"`
+	Bot           bool                `json:"bot"`
 }
 
 type ParticipantIdentity struct {
@@ -155,6 +158,7 @@ type MatchPlayer struct {
 	MatchHistoryURI string `json:"matchHistoryUri"`
 	ProfileIcon     int    `json:"profileIcon"`
 	SummonerName    string `json:"summonerName"`
+	SummonerId      int    `json:"summonerId"`
 }
 
 type BannedChampion struct {
@@ -225,7 +229,7 @@ func MatchByMatchID(region string, includeTimeline bool, matchID int64) (match M
 	url := fmt.Sprintf(
 		"https://%v.%v/lol/%v/v2.2/match/%d?%v",
 		region,
-		BaseURL,
+		BaseAPIURL,
 		region,
 		matchID,
 		args)

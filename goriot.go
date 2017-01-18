@@ -152,10 +152,10 @@ func requestAndUnmarshal(requestURL string, v interface{}) (err error) {
 	checkRateLimiter(smallRateChan)
 	checkRateLimiter(longRateChan)
 	resp, err := http.Get(requestURL)
-	defer resp.Body.Close()
 	if err != nil {
 		return
 	}
+	defer resp.Body.Close()
 	checkTimeTrigger(smallRateChan)
 	checkTimeTrigger(longRateChan)
 	if resp.StatusCode != http.StatusOK {
